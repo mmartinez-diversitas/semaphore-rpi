@@ -18,5 +18,5 @@
     - name: Log OSPF neighbor output into a file
       local_action:
         module: copy
-        content: "{{ running_config.stdout_lines[0] }}"
+        content: "{{ var }}"
         dest: ospf_neighbor_output.txt
