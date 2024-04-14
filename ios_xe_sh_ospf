@@ -12,11 +12,13 @@
           - show run | section ^interface
       register: running_config
 
-    - debug:
-        var: running_config.stdout_lines
-
     - name: Log OSPF neighbor output into a file
       local_action:
         module: copy
         content: "{{ running_config }}"
         dest: ospf_neighbor_output.txt
+
+
+    - debug:
+        var: running_config.stdout_lines
+
