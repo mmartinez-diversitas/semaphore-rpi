@@ -6,8 +6,8 @@
     - name: Show running-config
       cisco.ios.ios_command:
         commands:
-          - show ospf interface brief
-          - show ospf neighbor
+          - show ip ospf interface brief
+          - show ip ospf neighbor
           - show run | section router ospf
           - show run | section ^interface
       register: running_config
