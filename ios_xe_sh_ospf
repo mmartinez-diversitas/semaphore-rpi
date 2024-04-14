@@ -5,7 +5,6 @@
   tasks:
     - name: Show running-config
       ios_command:
-        backup: yes
         commands:
           - show ospf interface brief
           - show ospf neighbor
