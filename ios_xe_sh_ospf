@@ -9,7 +9,7 @@
           - show ospf interface brief
           - show ospf neighbor
           - show run | section router ospf
-          - show run interfaces
+          - show run | section ^interface
       register: running_config
 
     - debug:
