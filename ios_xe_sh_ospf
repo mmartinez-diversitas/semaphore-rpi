@@ -4,7 +4,7 @@
   gather_facts: yes
   tasks:
     - name: Show running-config
-      ios_command:
+      cisco.ios.ios_command:
         commands:
           - show ospf interface brief
           - show ospf neighbor
