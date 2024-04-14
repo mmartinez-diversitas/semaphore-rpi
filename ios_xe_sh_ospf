@@ -1,0 +1,16 @@
+---
+- name: Get show running-config of Cisco device
+  hosts: all
+  gather_facts: yes
+  tasks:
+    - name: Show running-config
+      ios_command:
+        commands:
+          - show ospf interface brief
+          - show ospf neighbor
+          - show run | section router ospf
+          - show run interface
+      register: running_config
+
+    - debug:
+        var: running_config.stdout_lines
