@@ -42,7 +42,7 @@
     - name: show run interfaces
       cisco.ios.ios_command:
         commands:
-          - show run | section ^interfaces
+          - show run | section ^interface
       register: shruninterfaces
 
     - name: Log show run interfaces
