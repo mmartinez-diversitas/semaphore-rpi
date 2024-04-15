@@ -46,7 +46,7 @@
     - name: show run interfaces
       cisco.iosxr.iosxr_command:
         commands:
-          - show run interfaces
+          - show run interface
       register: shruninterfaces
 
     - name: Log show run interfaces
