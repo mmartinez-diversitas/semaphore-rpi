@@ -21,8 +21,32 @@
           - show ip ospf neighbor
       register: showospfneigh
 
-    - name: Log show ospf int bri output into a file
+    - name: Log show ospf neighbor into a file
       local_action:
         module: copy
         content: "{{ showospfneigh.stdout[0] }}"
         dest: showospfneigh_output.txt
+
+    - name: show run router ospf
+      cisco.ios.ios_command:
+        commands:
+          - show run | section ^router ospf
+      register: shrunospf
+
+    - name: Log show run router ospf
+      local_action:
+        module: copy
+        content: "{{ shrunospf.stdout[0] }}"
+        dest: shrunospf_output.txt
+
+    - name: show run interfaces
+      cisco.ios.ios_command:
+        commands:
+          - show run | section ^interfaces
+      register: shruninterfaces
+
+    - name: Log show run interfaces
+      local_action:
+        module: copy
+        content: "{{ shruninterfaces.stdout[0] }}"
+        dest: shruninterfaces_output.txt
