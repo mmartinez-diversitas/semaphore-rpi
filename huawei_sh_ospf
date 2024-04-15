@@ -9,7 +9,7 @@
 
     - name: Show ip ospf interface brief
       huawei_command:
-        commands:
+        community.network.ce_command:
           - display version
       register: displayversion
 
