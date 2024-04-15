@@ -3,22 +3,26 @@
   hosts: all
   gather_facts: yes
   tasks:
-    - name: Show running-config
+    - name: Show ip ospf interface brief
       cisco.ios.ios_command:
         commands:
           - show ip ospf interface brief
-          - show ip ospf neighbor
-          - show run | section router ospf
-          - show run | section ^interface
-      register: running_config
+      register: showospfintbri
 
-    - name: Log OSPF neighbor output into a file
+    - name: Log show ospf int bri output into a file
       local_action:
         module: copy
-        content: "{{ running_config.stdout[0] }}"
+        content: "{{ showospfintbri.stdout[0] }}"
         dest: ospf_neighbor_output.txt
 
+    - name: Show ip ospf neigh
+      cisco.ios.ios_command:
+        commands:
+          - show ip ospf neighbor
+      register: showospfneigh
 
-    - debug:
-        var: running_config.stdout_lines
-
+    - name: Log show ospf int bri output into a file
+      local_action:
+        module: copy
+        content: "{{ showospfneigh.stdout[0] }}"
+        dest: ospf_neighbor_output.txt
