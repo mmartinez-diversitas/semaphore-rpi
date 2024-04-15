@@ -13,7 +13,7 @@
       local_action:
         module: copy
         content: "{{ showospfintbri.stdout[0] }}"
-        dest: ospf_neighbor_output.txt
+        dest: showospfintbri_output.txt
 
     - name: Show ip ospf neigh
       cisco.ios.ios_command:
@@ -25,4 +25,4 @@
       local_action:
         module: copy
         content: "{{ showospfneigh.stdout[0] }}"
-        dest: ospf_neighbor_output.txt
+        dest: showospfneigh_output.txt
