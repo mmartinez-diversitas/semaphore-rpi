@@ -10,11 +10,48 @@
     - name: Show ip ospf interface brief
       community.network.ce_command:
         commands:
-          - display version
-      register: displayversion
+          - display ospf interface 
+      register: displayospfinterface
 
     - name: Log show ospf int bri output into a file
       local_action:
         module: copy
-        content: "{{ displayversion.stdout[0] }}"
-        dest: "{{ inventory_hostname }}_displayversion_output_{{ current_datetime }}.txt"
+        content: "{{ displayospfinterface.stdout[0] }}"
+        dest: "{{ inventory_hostname }}_displayospfinterface_output_{{ current_datetime }}.txt"
+
+
+    - name: show ip ospf neighbor
+      community.network.ce_command:
+        commands:
+          - display ospf peer brief
+      register: displayospfpeerbrief
+
+    - name: Log show ip ospf neighbor output into a file
+      local_action:
+        module: copy
+        content: "{{ displayospfpeerbrief.stdout[0] }}"
+        dest: "{{ inventory_hostname }}_displayospfpeerbrief_output_{{ current_datetime }}.txt"
+
+    - name: Show run ospf
+      community.network.ce_command:
+        commands:
+          - display current-configuration configuration ospf
+      register: displaycurrentospf
+
+    - name: Log show run ospf output into a file
+      local_action:
+        module: copy
+        content: "{{ displaycurrentospf.stdout[0] }}"
+        dest: "{{ inventory_hostname }}_displaycurrentospf_output_{{ current_datetime }}.txt"
+
+    - name: Show run interfaces
+      community.network.ce_command:
+        commands:
+          - display current-configuration interface
+      register: displaycurrentinterfaces
+
+    - name: Log show run interfaces output into a file
+      local_action:
+        module: copy
+        content: "{{ displaycurrentinterfaces.stdout[0] }}"
+        dest: "{{ inventory_hostname }}_displaycurrentinterfaces_output_{{ current_datetime }}.txt"
