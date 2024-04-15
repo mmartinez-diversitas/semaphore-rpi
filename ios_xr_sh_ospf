@@ -1,0 +1,56 @@
+---
+- name: Get show running-config of Cisco device
+  hosts: all
+  gather_facts: yes
+  tasks:
+    - name: Get current date and time
+      set_fact:
+        current_datetime: "{{ lookup('pipe', 'date +%Y-%m-%d_%H-%M-%S') }}"
+
+    - name: Show ip ospf interface brief
+      cisco.iosxr.iosxr_command:
+        commands:
+          - show ospf interface brief
+      register: showospfintbri
+
+    - name: Log show ospf int bri output into a file
+      local_action:
+        module: copy
+        content: "{{ showospfintbri.stdout[0] }}"
+        dest: "{{ inventory_hostname }}_showospfintbri_output_{{ current_datetime }}.txt"
+
+    - name: Show ip ospf neigh
+      cisco.iosxr.iosxr_command:
+        commands:
+          - show ospf neighbor
+      register: showospfneigh
+
+    - name: Log show ospf neighbor into a file
+      local_action:
+        module: copy
+        content: "{{ showospfneigh.stdout[0] }}"
+        dest: "{{ inventory_hostname }}_showospfneigh_output_{{ current_datetime }}.txt"
+
+    - name: show run router ospf
+      cisco.iosxr.iosxr_command:
+        commands:
+          - show run router ospf
+      register: shrunospf
+
+    - name: Log show run router ospf
+      local_action:
+        module: copy
+        content: "{{ shrunospf.stdout[0] }}"
+        dest: "{{ inventory_hostname }}_shrunospf_output_{{ current_datetime }}.txt"
+
+    - name: show run interfaces
+      cisco.iosxr.iosxr_command:
+        commands:
+          - show run interfaces
+      register: shruninterfaces
+
+    - name: Log show run interfaces
+      local_action:
+        module: copy
+        content: "{{ shruninterfaces.stdout[0] }}"
+        dest: "{{ inventory_hostname }}_shruninterfaces_output_{{ current_datetime }}.txt"
