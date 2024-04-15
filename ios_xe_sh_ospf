@@ -13,7 +13,7 @@
       local_action:
         module: copy
         content: "{{ showospfintbri.stdout[0] }}"
-        dest: showospfintbri_output.txt
+        dest: {{ ansible_host }}_showospfintbri_output.txt
 
     - name: Show ip ospf neigh
       cisco.ios.ios_command:
@@ -25,7 +25,7 @@
       local_action:
         module: copy
         content: "{{ showospfneigh.stdout[0] }}"
-        dest: showospfneigh_output.txt
+        dest: {{ ansible_host }}_showospfneigh_output.txt
 
     - name: show run router ospf
       cisco.ios.ios_command:
@@ -37,7 +37,7 @@
       local_action:
         module: copy
         content: "{{ shrunospf.stdout[0] }}"
-        dest: shrunospf_output.txt
+        dest: {{ ansible_host }}_shrunospf_output.txt
 
     - name: show run interfaces
       cisco.ios.ios_command:
@@ -49,4 +49,4 @@
       local_action:
         module: copy
         content: "{{ shruninterfaces.stdout[0] }}"
-        dest: shruninterfaces_output.txt
+        dest: {{ ansible_host }}_shruninterfaces_output.txt
