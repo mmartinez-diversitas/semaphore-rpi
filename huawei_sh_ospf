@@ -1,0 +1,20 @@
+---
+- name: Get output of commands
+  hosts: all
+  gather_facts: no
+  tasks:
+    - name: Get current date and time
+      set_fact:
+        current_datetime: "{{ lookup('pipe', 'date +%Y-%m-%d_%H-%M-%S') }}"
+
+    - name: Show ip ospf interface brief
+      huawei_command:
+        commands:
+          - display version
+      register: displayversion
+
+    - name: Log show ospf int bri output into a file
+      local_action:
+        module: copy
+        content: "{{ displayversion.stdout[0] }}"
+        dest: "{{ inventory_hostname }}_displayversion_output_{{ current_datetime }}.txt"
