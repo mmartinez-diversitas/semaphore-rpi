@@ -8,8 +8,8 @@
         current_datetime: "{{ lookup('pipe', 'date +%Y-%m-%d_%H-%M-%S') }}"
 
     - name: Show ip ospf interface brief
-      huawei_command:
-        community.network.ce_command:
+      community.network.ce_command:
+        commands:
           - display version
       register: displayversion
 
