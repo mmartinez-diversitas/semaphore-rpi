@@ -3,6 +3,10 @@
   hosts: all
   gather_facts: yes
   tasks:
+    - name: Get current date and time
+      set_fact:
+        current_datetime: "{{ lookup('pipe', 'date +%Y-%m-%d_%H-%M-%S') }}"
+
     - name: Show ip ospf interface brief
       cisco.ios.ios_command:
         commands:
@@ -13,7 +17,7 @@
       local_action:
         module: copy
         content: "{{ showospfintbri.stdout[0] }}"
-        dest: "{{ inventory_hostname }}_showospfintbri_output_{{ ansible_date_time.iso8601 }}.txt"
+        dest: "{{ inventory_hostname }}_showospfintbri_output_{{ current_datetime }}.txt"
 
     - name: Show ip ospf neigh
       cisco.ios.ios_command:
@@ -25,7 +29,7 @@
       local_action:
         module: copy
         content: "{{ showospfneigh.stdout[0] }}"
-        dest: "{{ inventory_hostname }}_showospfneigh_output_{{ ansible_date_time.iso8601 }}.txt"
+        dest: "{{ inventory_hostname }}_showospfneigh_output_{{ current_datetime }}.txt"
 
     - name: show run router ospf
       cisco.ios.ios_command:
@@ -37,7 +41,7 @@
       local_action:
         module: copy
         content: "{{ shrunospf.stdout[0] }}"
-        dest: "{{ inventory_hostname }}_shrunospf_output_{{ ansible_date_time.iso8601 }}.txt"
+        dest: "{{ inventory_hostname }}_shrunospf_output_{{ current_datetime }}.txt"
 
     - name: show run interfaces
       cisco.ios.ios_command:
@@ -49,4 +53,4 @@
       local_action:
         module: copy
         content: "{{ shruninterfaces.stdout[0] }}"
-        dest: "{{ inventory_hostname }}_shruninterfaces_output_{{ ansible_date_time.iso8601 }}.txt"
+        dest: "{{ inventory_hostname }}_shruninterfaces_output_{{ current_datetime }}.txt"
